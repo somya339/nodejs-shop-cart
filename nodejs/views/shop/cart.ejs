@@ -1,0 +1,50 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (prods.length > 0) { %>
+        <div class="grid">
+            <% prods.forEach( (prod,i )=> { %>
+            <article class="card product-item">
+                <header class="card__header">
+                    <h1 class="product__title">
+                        <%= prod.title %>
+                    </h1>
+                </header>
+                <div class="card__image">
+                    <img src="<%= prod.imageUrl %>" alt="<%= prod.title %>">
+                </div>
+                <div class="card__content">
+                    <h2 class="product__price">$
+                        <%= prod.price %>
+                    </h2>
+                    <p class="product__description">
+                        <%= prod.description %>
+                    </p>
+                </div>
+                <div class="card__actions">
+                    <% try { %>
+                    <b> QTY:<%= prod_cart.products[i].qty %></b>
+                    <%} catch { %>
+                    <b></b>
+                    <% }%>
+
+                    <button class="btn">remove</button>
+                </div>
+            </article>
+            <%   }); %>
+            <% } else { %>
+                <h1 style="color: azure;">No Products Found!</h1>
+                <% } %>
+            <% if(method === "get") { %>
+            <h1 class="total">
+                Your Cart Total Is : &#x20B9;<%= prod_cart.totalPrice  %>
+            </h1>
+            <% } %>
+        </div>
+    </main>
+    <%- include('../includes/end.ejs') %>
